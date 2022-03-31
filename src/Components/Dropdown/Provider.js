@@ -1,75 +1,80 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from 'react';
 
-const Context = React.createContext();
+export const Context = React.createContext();
 
-export function DropdownProvider({children}) {
+export function DropdownProvider({ children }) {
+  const [options, setOptions] = useState([]);
+  const [targetId, setTargetId] = useState(null);
+  const [cachedId, setCachedId] = useState(null);
 
-    const [options, setOptions] = useState([]);
-    const [targetId, setTargetId] = useState(null);
-    const [cacheId, setCacheId] = useState(null);
-
-    const registerOption = useCallback(({
-            id,
-            optionDimensions,
-            optionCenterX,
-            WrappedContent,
-            backgroundHeight,
-        }) => {
-            setOptions(items => [
-                ...items,
-                {
-                    id,
-                    optionDimensions,
-                    optionCenterX,
-                    WrappedContent,
-                    backgroundHeight,
-                },
-            ]);
-
-
-
+  const registerOption = useCallback(
+    ({
+      id,
+      optionDimensions,
+      optionCenterX,
+      WrappedContent,
+      backgroundHeight,
+    }) => {
+      setOptions((items) => [
+        ...items,
+        {
+          id,
+          optionDimensions,
+          optionCenterX,
+          WrappedContent,
+          backgroundHeight,
         },
-        [setOptions]
-    );
+      ]);
+    },
+    [setOptions]
+  );
 
-    const updateOptionProps = useCallback((optionId, props) => {
-        setOptions((items) => 
-            items.map((item) => {
-                if (item.id === optionId) {
-                    item = {...item, ...props};
-                }
-                return item;
-            })
-        )
-    }, [setOptions]);
+  const updateOptionProps = useCallback(
+    (optionId, props) => {
+      setOptions((items) =>
+        items.map((item) => {
+          if (item.id === optionId) {
+            item = { ...item, ...props };
+          }
 
-    const getOptionById = useCallback(
-        (id) => options.find((item) => item.id === id), 
-    [options]);
+          return item;
+        })
+      );
+    },
+    [setOptions]
+  );
 
-    const deleteOptionById = useCallback((id) => {
-        setOptions(items => items.filter(item => item.id !== id))
-    }, [setOptions])
+  const getOptionById = useCallback(
+    (id) => options.find((item) => item.id === id),
+    [options]
+  );
 
-    useEffect(() => {
-        if (targetId !== null) setCacheId(targetId);
+  const deleteOptionById = useCallback(
+    (id) => {
+      setOptions((items) => items.filter((item) => item.id !== id));
+    },
+    [setOptions]
+  );
 
-    }, [targetId]);
-    return (
-        <Context.Provider 
-            value={{ 
-                registerOption,
-                updateOptionProps,
-                getOptionById,
-                deleteOptionById,
-                options,
-                targetId,
-                setTargetId,
-                cacheId,
-                setCacheId
-            }}
-        >
-            {children}
-        </Context.Provider>
-    );
+  useEffect(() => {
+    if (targetId !== null) setCachedId(targetId);
+  }, [targetId]);
+
+  return (
+    <Context.Provider
+      value={{
+        registerOption,
+        updateOptionProps,
+        getOptionById,
+        deleteOptionById,
+        options,
+        targetId,
+        setTargetId,
+        cachedId,
+        setCachedId,
+      }}
+    >
+      {children}
+    </Context.Provider>
+  );
 }

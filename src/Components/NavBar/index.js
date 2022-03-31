@@ -2,7 +2,7 @@ import React from 'react';
 
 import * as C from './styles';
 import { Products, Developers, Company } from '../Content';
-import { DropdownProvider, DropdownOption } from '../Dropdown';
+import { DropdownProvider, DropdownOption, DropdownRoot } from '../Dropdown';
 
 function Navbar() {
   return (
@@ -30,6 +30,7 @@ function Navbar() {
                   </li>
               </ul>
             </C.Container>
+            <DropdownRoot/>
           </C.DropdownStyles>
       </DropdownProvider>
   );
