@@ -3,7 +3,7 @@ UI Clone - Stripe Menu
 </h1>
 
 <p align="center">Stripe Menu Clone for study purposes.</p>
-<p align="center">Deployed <a href="https://rocketseat-clone-stripe-menu.netlify.app/">here</a>.</p>
+<p align="center">Deployed <a href="jovial-snickerdoodle-fa51de">here</a>.</p>
 
 <hr>
 

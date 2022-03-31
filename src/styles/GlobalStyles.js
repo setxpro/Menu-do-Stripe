@@ -8,7 +8,7 @@ export default createGlobalStyle`
     }
     html {
         min-height: 100%;
-        background: #202020;
+        background: linear-gradient(150deg, #53F 15%, #05D5FF);
     }
     *,button, input{
         border: 0;
@@ -18,5 +18,9 @@ export default createGlobalStyle`
     ul {
         list-style: none;
         padding-left: 0;
+    }
+
+    ::-webkit-scrollbar {
+        width: 0;
     }
 `;
